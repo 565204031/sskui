@@ -1,6 +1,6 @@
 package com.ssk.sskui;
 
-import com.ssk.sskui.utils.FindViewUtils;
+import com.ssk.sskui.utils.ViewUtils;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -16,6 +16,6 @@ public class DividingActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dividing_activity);
-		FindViewUtils.initViews(this);
+		ViewUtils.initViews(this);
 	}
 }

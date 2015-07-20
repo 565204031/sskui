@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ssk.sskui.fragment.NewsDigestFragment;
-import com.ssk.sskui.utils.FindViewUtils;
+import com.ssk.sskui.utils.ViewUtils;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -24,7 +24,7 @@ public class NewsDigestActivity extends FragmentActivity implements OnPageChange
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newsdigest_activity);
-		FindViewUtils.initViews(this);
+		ViewUtils.initViews(this);
 		data=new ArrayList<NewsDigestFragment>();
 		for (int i=0; i<8; i++)
 		{

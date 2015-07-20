@@ -1,5 +1,7 @@
 ﻿# sskui 集合各种自定义控件，各种帮助类，持续更新。。。。
 
+[App百度网盘下载地址](http://pan.baidu.com/s/1dDrq0G5)<br /> 
+[http://pan.baidu.com/s/1dDrq0G5](http://pan.baidu.com/s/1dDrq0G5)<br /> 
 ### 网易新闻切换效果 WangYiActivity<br />
 
 ### QQ侧滑效果 QQSlidingMenuActivity<br />
@@ -16,7 +18,7 @@
 如果用得不爽，可以用我最近封装的LruCacheUtils<br />
 使用前必须初始化一次 LruCacheUtils.initLruCache()<br />
 LruCacheUtils.display(imageView,图片路径) 这个是显示原图<br />
-LruCacheUtils.display(imageView,图片路径，图片宽度，图片高度)这个是缩的图片。注意加载到SD卡的都是原图
+LruCacheUtils.display(imageView,图片路径，图片宽度，图片高度)这个是缩放的图片。注意加载到SD卡的都是原图
 <br />
 
 ### GIF动画引擎 GifSurfaceView <br />

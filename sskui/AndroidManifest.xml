@@ -40,11 +40,6 @@
             android:name="com.ssk.sskui.QQPullActivity"
             android:label="@string/app_name" >
         </activity>
-          <!-- QQ空间下拉 -->
-           <activity
-            android:name="com.ssk.sskui.NewsDigestActivity"
-            android:label="@string/app_name" >
-        </activity>
          <!-- 下拉刷新，上拉加载 -->
            <activity
             android:name="com.ssk.sskui.RefreshActivity"
@@ -73,6 +68,11 @@
          <!-- News Digest 翻页效果-->
            <activity
             android:name="com.ssk.sskui.NewsDigestActivity"
+            android:label="@string/app_name" >
+        </activity>
+         <!-- GIF动画引擎 -->
+           <activity
+            android:name="com.ssk.sskui.WxContactsActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

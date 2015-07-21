@@ -629,7 +629,7 @@ containing a value of this type.
         public static final int userimg=0x7f020029;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0035;
+        public static final int action_settings=0x7f0b0038;
         public static final int bottom=0x7f0b0034;
         public static final int bt_add=0x7f0b0032;
         public static final int bt_del=0x7f0b0031;
@@ -668,6 +668,7 @@ containing a value of this type.
         public static final int saterfall_sv=0x7f0b0001;
         public static final int science=0x7f0b0028;
         public static final int second_ll=0x7f0b0004;
+        public static final int sidebar=0x7f0b0035;
         public static final int sports=0x7f0b0026;
         public static final int state_iv=0x7f0b0010;
         public static final int state_tv=0x7f0b000f;
@@ -677,7 +678,9 @@ containing a value of this type.
         public static final int top_img=0x7f0b001b;
         public static final int tv=0x7f0b0030;
         public static final int tv_content=0x7f0b001f;
+        public static final int tv_name=0x7f0b0037;
         public static final int tv_number=0x7f0b001d;
+        public static final int tv_spell=0x7f0b0036;
         public static final int tv_title=0x7f0b001e;
         public static final int two=0x7f0b0014;
         public static final int v=0x7f0b002c;
@@ -703,6 +706,8 @@ containing a value of this type.
         public static final int weixin_capture=0x7f03000f;
         public static final int weixin_chat=0x7f030010;
         public static final int weixinslide_main=0x7f030011;
+        public static final int wxcontacts_activity=0x7f030012;
+        public static final int wxcontacts_itme=0x7f030013;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

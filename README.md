@@ -42,6 +42,8 @@ LruCacheUtils.display(imageView,图片路径，图片宽度，图片高度)这�
 
 ### 雅虎News Digest 翻页效果 NewsDigestActivity<br />
 
+### 微信通讯录字母导航效果 WxContactsActivity<br />
+
 
 ### LruCacheUtils 内存缓存，图片缩放，图片加载，图片缓存SD卡。
 

@@ -1,12 +1,10 @@
 package com.ssk.sskui;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.ssk.sskui.fragment.NewsDigestFragment;
 import com.ssk.sskui.utils.ViewUtils;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;

@@ -40,6 +40,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 				,"GIF动画引擎"
 				,"自定义滑竿"
 				,"News Digest 翻页效果"
+				,"微信通讯录字母导航"
 				}));
 		listview.setOnItemClickListener(this);
 	}
@@ -90,6 +91,11 @@ public class MainActivity extends Activity implements OnItemClickListener{
 		case 8:
 			//News Digest 翻页效果
 			intent =new Intent(this, NewsDigestActivity.class);
+			startActivity(intent);
+			break;
+		case 9:
+			//微信通讯录字母导航
+			intent =new Intent(this, WxContactsActivity.class);
 			startActivity(intent);
 			break;
 		default:

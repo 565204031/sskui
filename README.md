@@ -1,7 +1,7 @@
 ﻿# sskui 集合各种自定义控件，各种帮助类，持续更新。。。。
 
 [App百度网盘下载地址](http://pan.baidu.com/s/1dDrq0G5)<br /> 
-[http://pan.baidu.com/s/1dDrq0G5](http://pan.baidu.com/s/1dDrq0G5)<br /> 
+[http://pan.baidu.com/s/1qWuXPZA](http://pan.baidu.com/s/1dDrq0G5)<br /> 
 ### 网易新闻切换效果 WangYiActivity<br />
 
 ### QQ侧滑效果 QQSlidingMenuActivity<br />

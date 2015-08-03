@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ssk.sskui"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="20" />
+   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+   <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+   <uses-permission android:name="android.permission.INTERNET"/>  
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <activity
+            android:name="com.ssk.sskui.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- 网易切换 -->
+           <activity
+            android:name="com.ssk.sskui.WangYiActivity"
+            android:label="@string/app_name" >
+        </activity>
+        
+         <!-- QQ侧滑 -->
+           <activity
+            android:name="com.ssk.sskui.QQSlidingMenuActivity"
+            android:label="@string/app_name" >
+        </activity>
+        
+         <!-- QQ空间下拉 -->
+           <activity
+            android:name="com.ssk.sskui.QQPullActivity"
+            android:label="@string/app_name" >
+        </activity>
+         <!-- 下拉刷新，上拉加载 -->
+           <activity
+            android:name="com.ssk.sskui.RefreshActivity"
+            android:label="@string/app_name" >
+        </activity>
+         <!-- 微信下拉拍照效果 -->
+           <activity
+            android:name="com.ssk.sskui.WeixinslideActivity"
+            android:label="@string/app_name" >
+        </activity>
+          <!-- 百度图片瀑布流,缓存SD卡,LruCache -->
+           <activity
+            android:name="com.ssk.sskui.BaiduWaterfallActivity"
+            android:label="@string/app_name" >
+        </activity>
+          <!-- GIF动画引擎 -->
+           <activity
+            android:name="com.ssk.sskui.GifActivity"
+            android:label="@string/app_name" >
+        </activity>
+         <!-- 自定义滑竿 -->
+           <activity
+            android:name="com.ssk.sskui.DividingActivity"
+            android:label="@string/app_name" >
+        </activity>
+         <!-- News Digest 翻页效果-->
+           <activity
+            android:name="com.ssk.sskui.NewsDigestActivity"
+            android:label="@string/app_name" >
+        </activity>
+         <!-- 微信通讯录字母导航 -->
+           <activity
+            android:name="com.ssk.sskui.WxContactsActivity"
+            android:label="@string/app_name" >
+        </activity>   
+          <!-- 微信雷达加好友 -->
+           <activity
+            android:name="com.ssk.sskui.SatelliteActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <!-- HttpUtilsDemo -->
+           <activity
+            android:name="com.ssk.sskui.HttpUtilsDemoActivity"
+            android:label="@string/app_name" >
+        </activity>
+    </application>
+
+</manifest>

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +17,7 @@ import android.graphics.BitmapFactory.Options;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.util.LruCache;
+import android.util.Log;
 import android.widget.ImageView;
 
 /**
@@ -25,11 +28,16 @@ import android.widget.ImageView;
 public class LruCacheUtils {
 
 	
-	 // 缓存Image的类，当存储Image的大小大于LruCache设定的值，系统自动释放内存 
+	//缓存Image的类，当存储Image的大小大于LruCache设定的值，系统自动释放内存 
     private static LruCache<String, Bitmap> mMemoryCache;  
-    private static String SD_FOLDER="shantu";
-    public final static String SD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath().toString(); 
-    public static void initLruCache(){
+    //默认路径
+    private final static String SD_PATHDefault = Environment.getExternalStorageDirectory().getAbsolutePath().toString(); 
+    //路径
+    private static String SD_PATH;
+    //下载图片时间
+    public static int timeout=5000;
+    public static void initLruCache(String path){
+    	LruCacheUtils.SD_PATH=path;
     	 int maxMemory = (int) Runtime.getRuntime().maxMemory();    
          int mCacheSize = maxMemory / 8;  
          mMemoryCache=new LruCache<String, Bitmap>(mCacheSize){
@@ -39,7 +47,6 @@ public class LruCacheUtils {
 			protected int sizeOf(String key, Bitmap value) {
 				  return value.getRowBytes() * value.getHeight(); 
 			}
-			
 		};
     }
     /**
@@ -48,9 +55,7 @@ public class LruCacheUtils {
      * @param url
      */
     public static void display(ImageView iv,String url){
-    	LoadingImageTask loading=new LoadingImageTask(iv);
-    	loading.execute(url,"0","0");
-    	//Bitmap bitmap=SDloadImage(name,bitmap,);
+    	display(iv,url,0,0);
     }
     /**
      * 显示图片到控件
@@ -61,12 +66,12 @@ public class LruCacheUtils {
      */
     public static void display(ImageView iv,String url,int reqWidth,int reqHeight){
     	LoadingImageTask loading=new LoadingImageTask(iv);
-    	loading.execute(url,reqWidth+"",reqHeight+"");
-    	//Bitmap bitmap=SDloadImage(name,bitmap,);
+    	loading.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url,reqWidth+"",reqHeight+"");  
+    	//loading.execute(url,reqWidth+"",reqHeight+"");
     }
     private static class LoadingImageTask extends AsyncTask<String,Void,Bitmap>{
 
-    	public ImageView iv;
+    	private ImageView iv;
     	public LoadingImageTask(ImageView iv){
     		this.iv=iv;
     	}
@@ -75,12 +80,15 @@ public class LruCacheUtils {
 			String name=params[0].substring(params[0].lastIndexOf("/")+1);
 			int reqWidth=Integer.parseInt(params[1]);
 			int reqHeight=Integer.parseInt(params[2]);
-	    	//查看sd卡是否有缓存
+	    
 			Bitmap bitmap=null;
-			//返回null表示SD没有缓存
-			bitmap=SDloadImage(name,reqWidth,reqHeight);
-			if(bitmap==null)
-			{
+			//查看内存是否有该图片
+			bitmap=getBitmapFromMemCache(SD_PATH+"/"+name);
+			if(bitmap==null){
+				//查看sd卡是否有该图片
+				bitmap=SDloadImage(SD_PATH+"/"+name,reqWidth,reqHeight);
+			}
+			if(bitmap==null){
 				//网络下载到本地
 				bitmap=loadImage(params[0],reqWidth,reqHeight);
 			}
@@ -90,7 +98,9 @@ public class LruCacheUtils {
 		@Override
 		protected void onPostExecute(Bitmap result) {
 			super.onPostExecute(result);
-			iv.setImageBitmap(result);
+			if(result!=null){
+				iv.setImageBitmap(result);;
+			}
 		}
 	}
     /**
@@ -106,18 +116,18 @@ public class LruCacheUtils {
 			HttpURLConnection conn;
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
-			conn.setConnectTimeout(5000);
+			conn.setConnectTimeout(timeout);
 			String name=strurl.substring(strurl.lastIndexOf("/")+1);
 			if(conn.getResponseCode()==200)
 			{
 				InputStream is=conn.getInputStream();
 				//判断目录是否存在，没有则创建
-				File file = new File(SD_PATH+"/"+SD_FOLDER);
+				File file = new File(SD_PATH);
 				if (!file.exists()) {
 					file.mkdir();
 				}
 				//下载图片到sd卡
-				FileOutputStream os=new FileOutputStream(SD_PATH+"/"+SD_FOLDER+"/"+name);
+				FileOutputStream os=new FileOutputStream(SD_PATH+"/"+name);
 				int len=0;
 				byte[] buffer=new byte[1024];
 				//返回-1表示读完
@@ -127,7 +137,7 @@ public class LruCacheUtils {
 				}
 				os.close();
 				is.close();
-				return getZoomBitmap(SD_PATH+"/"+SD_FOLDER+"/"+name,reqWidth,reqHeight);
+				return getZoomBitmap(SD_PATH+"/"+name,reqWidth,reqHeight);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -145,7 +155,7 @@ public class LruCacheUtils {
         if (getBitmapFromMemCache(key) == null && bitmap != null) { 
         	if(mMemoryCache==null)
         	{
-        		initLruCache();
+        		initLruCache(SD_PATHDefault);
         	}
             mMemoryCache.put(key, bitmap);    
             
@@ -161,43 +171,10 @@ public class LruCacheUtils {
     public static Bitmap getBitmapFromMemCache(String key) {   
     	if(mMemoryCache==null)
     	{
-    		initLruCache();
+    		initLruCache(SD_PATHDefault);
     	}
         return mMemoryCache.get(key);    
     }  
-     /**
-      * 
-      * @param 流
-      * @param 图片MD5值
-      * @return
-      * @author 杀死凯 QQ565204031
-      */
-	public static Bitmap getBitmap(byte[] avatar, String filename) {
-		try {
-			ByteArrayInputStream bais = new ByteArrayInputStream(avatar);
-			// 判断目录是否存在，没有则创建
-			File file = new File(SD_PATH + "/"+SD_FOLDER);
-			if (!file.exists()) {
-				file.mkdir();
-			}
-			// 下载图片到sd卡
-			FileOutputStream os = new FileOutputStream(SD_PATH + "/"+SD_FOLDER+"/"
-					+ filename);
-			int len = 0;
-			byte[] buffer = new byte[1024];
-			// 返回-1表示读完
-			while ((len = bais.read(buffer)) != -1) {
-				os.write(buffer, 0, len);
-			}
-			bais.close();
-			os.close();
-			return getZoomBitmap(SD_PATH + "/"+SD_FOLDER+"/"+ filename,200,200);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 	/**
 	 * 
 	 * @param SD卡路径
@@ -231,11 +208,11 @@ public class LruCacheUtils {
 		return getBitmapFromMemCache(path);
 	}
 	/**
-	 * @param 图片MD5
+	 * @param 图片本地路径
 	 * @return 返回null表示SD卡无图
 	 * @author 杀死凯 QQ565204031
 	 */
-	public static Bitmap SDloadImage(String name,int reqWidth,int reqHeight){
-		return getZoomBitmap(SD_PATH+"/"+SD_FOLDER+"/"+name,reqWidth,reqHeight);
+	public static Bitmap SDloadImage(String path,int reqWidth,int reqHeight){
+		return getZoomBitmap(path,reqWidth,reqHeight);
 	}
 }

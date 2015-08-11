@@ -26,7 +26,7 @@ public class SatelliteView extends View{
 	private int height;
 	private int width;
 	//旋转角度
-	private int angle=0;
+	private float angle=0;
 	private Matrix mMatrix;
 	private Handler handler=new Handler();
 	private Runnable runnable=new Runnable() {
@@ -34,11 +34,11 @@ public class SatelliteView extends View{
 		@Override
 		public void run() {
 			mMatrix=new Matrix();
-			//每次旋转+1
-			angle+=1;
+			//每次旋转+0.5
+			angle+=0.5;
 			mMatrix.postRotate(angle, width/2, height/2);
 			SatelliteView.this.invalidate();
-			handler.postDelayed(runnable,50);
+			handler.postDelayed(runnable,20);
 		}
 	};
 	public SatelliteView(Context context, AttributeSet attrs) {
@@ -46,7 +46,7 @@ public class SatelliteView extends View{
 		initPaint();
 		height=context.getResources().getDisplayMetrics().heightPixels;
 		width=context.getResources().getDisplayMetrics().widthPixels;
-		handler.postDelayed(runnable,50);
+		handler.postDelayed(runnable,20);
 	}
 
 	/**
@@ -92,7 +92,6 @@ public class SatelliteView extends View{
 		
 		//绘制圆
 		canvas.drawCircle(width/2, height/2, 16*width/20, mPaintSector);
-		
 	
 		super.onDraw(canvas);
 	}

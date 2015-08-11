@@ -8,5 +8,6 @@
     android:id="@+id/satellite"
       android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/a2e"
     />
 </LinearLayout>
